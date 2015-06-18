@@ -68,13 +68,14 @@ public class StaticReflection {
         for (DataTypeEnum item : DataTypeEnum.values()) {   
             
             // here we create new class instance for each publicMethod() call,
-            // this resets the private fields to class default values
+            // this resets the private non-static fields to class default values
+            // and the class loader provides the stored static values to class
             ClassToTest test = new ClassToTest();
             
             System.out.println("Called publicMethod with parameter: "+ item);
             test.publicMethod(item);
             
-            // get private field values from (reused) class instance via reflection
+            // get private field values from new class instance via reflection
             try {
                 Field staticCharField = ClassToTest.class.getDeclaredField("staticChar");
                 staticCharField.setAccessible(true);
